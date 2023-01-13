@@ -33,7 +33,7 @@ export const SubmitButton = styled.button`
   border-radius: 6px;
   border: 0;
   font-size: 15px;
-  &:hover{
- background-color: #2FFCFF;
- }
+  &:hover {
+    background-color: #2ffcff;
+  }
 `;

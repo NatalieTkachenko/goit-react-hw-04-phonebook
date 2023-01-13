@@ -25,21 +25,22 @@ class AddContactForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const nameToCheck = this.state.name;
-    const doubledContact = this.props.contactsInBook.find( contact => contact.name === nameToCheck );
+    const doubledContact = this.props.contactsInBook.find(
+      contact => contact.name === nameToCheck
+    );
 
-    if ( doubledContact )
-    {
-      alert( nameToCheck + " is already in contacts" );
+    if (doubledContact) {
+      alert(nameToCheck + ' is already in contacts');
       this.reset();
       return;
-    } 
-    
+    }
+
     this.props.onSubmit(this.state);
     this.reset();
   };
 
   reset = () => {
-    this.setState({ name: '' , number:''});
+    this.setState({ name: '', number: '' });
   };
 
   render() {

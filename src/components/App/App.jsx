@@ -15,26 +15,24 @@ class App extends Component {
     filter: '',
   };
 
-  componentDidMount()
-  {
-    const dataInStorage = localStorage.getItem( "contacts" );
-    console.log( dataInStorage );
-    const parsedDataFromStorage = JSON.parse( dataInStorage );
-    console.log( parsedDataFromStorage );
-    this.setState( { contacts: parsedDataFromStorage } );
+  componentDidMount() {
+    const dataInStorage = localStorage.getItem('contacts');
+
+    const parsedDataFromStorage = JSON.parse(dataInStorage);
+
+    if (parsedDataFromStorage) {
+      this.setState({ contacts: parsedDataFromStorage });
+    }
   }
 
-  componentDidUpdate(prevProps, prevState)
-  {
-    if ( prevState.contacts !== this.state.contacts )
-    {
-      localStorage.setItem( 'contacts', JSON.stringify( this.state.contacts ) );
-    };
-  };
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
 
-  handleFilter = e =>
-  {
-    this.setState({filter: e.currentTarget.value})
+  handleFilter = e => {
+    this.setState({ filter: e.currentTarget.value });
   };
 
   updateContacts = ({ name, number }) => {
@@ -46,16 +44,16 @@ class App extends Component {
     });
   };
 
-  deleteContactHandler = ( id ) =>
-  {
-    this.setState( prevState => ( {
-    contacts: prevState.contacts.filter(contact=> contact.id!== id)
-    } ) )
-  }
+  deleteContactHandler = id => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== id),
+    }));
+  };
 
-  render()
-  {
-    const filteredContacts = this.state.contacts.filter( contact => contact.name.toLowerCase().includes( this.state.filter.toLowerCase() ) );
+  render() {
+    const filteredContacts = this.state.contacts.filter(contact =>
+      contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
+    );
     return (
       <div
         style={{
@@ -67,8 +65,9 @@ class App extends Component {
       >
         <AppTitle>Phonebook 📓</AppTitle>
         <AddContactForm
-          contactsInBook ={this.state.contacts}
-          onSubmit={ this.updateContacts } />
+          contactsInBook={this.state.contacts}
+          onSubmit={this.updateContacts}
+        />
         <ContactsTitle>Contacts</ContactsTitle>
         <SearchTitle>Find contacts by name</SearchTitle>
         <SearchInput
@@ -76,7 +75,10 @@ class App extends Component {
           value={this.state.filter}
           onChange={this.handleFilter}
         />
-        <ContactList contacts={filteredContacts} onDeleteContact={this.deleteContactHandler}/>
+        <ContactList
+          contacts={filteredContacts}
+          onDeleteContact={this.deleteContactHandler}
+        />
       </div>
     );
   }
